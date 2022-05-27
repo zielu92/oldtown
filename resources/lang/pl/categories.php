@@ -10,6 +10,7 @@ return [
     'edit' => 'Edytuj',
     'add' => 'Dodaj nową kategorie',
     'marker' => 'Znacznik',
+    'layers' => 'Warstwy',
     'unknown' => 'Brak',
     'added' => 'Kategoria została dodana',
     'edited' => 'Kategoria została edytowana',

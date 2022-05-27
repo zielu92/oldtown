@@ -10,6 +10,7 @@ return [
     'edit' => 'Edit',
     'add' => 'Add new category',
     'marker' => 'Marker',
+    'layers' => 'Layers',
     'unknown' => 'Unknown',
     'added' => 'Category has been added',
     'edited' => 'Category has been edited',

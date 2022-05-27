@@ -5319,6 +5319,9 @@ Vue.component('edit-mode', function (resolve) {
 Vue.component('add-marker', function (resolve) {
   __webpack_require__.e(/*! AMD require */ "resources_js_components_editViews_AddMarker_vue").then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/editViews/AddMarker */ "./resources/js/components/editViews/AddMarker.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this))['catch'](__webpack_require__.oe)["default"];
 });
+Vue.component('add-layer', function (resolve) {
+  __webpack_require__.e(/*! AMD require */ "resources_js_components_editViews_AddLayer_vue").then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/editViews/AddLayer */ "./resources/js/components/editViews/AddLayer.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this))['catch'](__webpack_require__.oe)["default"];
+});
 Vue.component('edit-mode-side', function (resolve) {
   __webpack_require__.e(/*! AMD require */ "resources_js_components_editViews_EditModeSide_vue").then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/editViews/EditModeSide */ "./resources/js/components/editViews/EditModeSide.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this))['catch'](__webpack_require__.oe)["default"];
 });
@@ -60811,7 +60814,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_MainMap_vue":1,"resources_js_components_photo_PhotoRestoration_vue":1,"resources_js_components_EditMode_vue":1,"resources_js_components_editViews_AddMarker_vue":1,"resources_js_components_editViews_EditModeSide_vue":1,"resources_js_components_editViews_EditModeTop_vue":1,"resources_js_components_BrowseMode_vue":1,"resources_js_components_browseViews_BrowseModeSide_vue":1,"resources_js_components_browseViews_BrowseModeTop_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_MainMap_vue":1,"resources_js_components_photo_PhotoRestoration_vue":1,"resources_js_components_EditMode_vue":1,"resources_js_components_editViews_AddMarker_vue":1,"resources_js_components_editViews_AddLayer_vue":1,"resources_js_components_editViews_EditModeSide_vue":1,"resources_js_components_editViews_EditModeTop_vue":1,"resources_js_components_BrowseMode_vue":1,"resources_js_components_browseViews_BrowseModeSide_vue":1,"resources_js_components_browseViews_BrowseModeTop_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

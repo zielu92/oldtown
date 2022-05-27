@@ -36,6 +36,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "EditMode",
@@ -47,6 +49,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       markers: [],
       marker: '',
+      clickCounter: 0,
       geosearchOptions: {
         // Important part Here
         provider: new leaflet_geosearch__WEBPACK_IMPORTED_MODULE_0__.OpenStreetMapProvider()
@@ -56,6 +59,7 @@ __webpack_require__.r(__webpack_exports__);
       zoom: 15,
       center: [51.53128791778799, 20.00830181051791],
       layerOpacity: 0.9,
+      layerImage: '',
       imageLayers: [{
         url: 'https://d-art.ppstatic.pl/kadry/k/r/62/e5/5ad065ed93fc4_o.jpg',
         bounds: [[51.535758, 20.000128], [51.523011, 20.015652]]
@@ -63,6 +67,10 @@ __webpack_require__.r(__webpack_exports__);
         url: 'https://d-art.ppstatic.pl/kadry/k/r/e7/d2/5ad065e06adbc_o.jpg',
         bounds: [[51.533758, 19.989077], [51.521276, 20.005642]]
       }],
+      imageLayer: {
+        'url': '',
+        bounds: []
+      },
       task: null
     };
   },
@@ -70,8 +78,22 @@ __webpack_require__.r(__webpack_exports__);
     initData: function initData() {//
     },
     addSomething: function addSomething(event) {
+      this.clickCounter++;
+
       if (this.task === 'addMarker') {
         this.marker = event.latlng;
+      } else if (this.task === 'addLayer') {
+        if (this.clickCounter % 2 === 1) {
+          this.imageLayer.bounds = [event.latlng];
+        } else {
+          this.imageLayer.bounds.push(event.latlng);
+        } //check if URL of image exists
+        //check if bounds exists
+        //add
+        // this.imageLayers = {
+        //
+        // }
+
       } else {
         this.addPolyline(event);
       }
@@ -82,11 +104,24 @@ __webpack_require__.r(__webpack_exports__);
     addMarker: function addMarker(event) {
       this.markers.push(event.latlng);
     },
+    addLayerImage: function addLayerImage(event) {
+      !!this.imageLayer.url ? this.imageLayer = {
+        'url': event
+      } : this.imageLayer.url = event;
+    },
     addPolyline: function addPolyline(event) {
       this.polylines[0].latlngs.push([event.latlng.lat, event.latlng.lng]);
     },
     updateTask: function updateTask(event) {
       this.task = event;
+    }
+  },
+  watch: {
+    task: function task(val) {
+      //reset counter on changed task
+      if (val) {
+        this.clickCounter = 0;
+      }
     }
   }
 });
@@ -291,6 +326,11 @@ var render = function () {
                   attrs: { marker: _vm.marker },
                   on: { add: _vm.initData },
                 })
+              : _vm.task === "addLayer"
+              ? _c("add-layer", {
+                  attrs: { bounds: _vm.imageLayer.bounds },
+                  on: { add: _vm.initData, img: _vm.addLayerImage },
+                })
               : _c("edit-mode-side"),
           ],
           1
@@ -369,6 +409,16 @@ var render = function () {
                     },
                   })
                 }),
+                _vm._v(" "),
+                !!_vm.imageLayer.url
+                  ? _c("l-image-overlay", {
+                      attrs: {
+                        url: _vm.imageLayer.url,
+                        bounds: _vm.imageLayer.bounds,
+                        opacity: _vm.layerOpacity,
+                      },
+                    })
+                  : _vm._e(),
               ],
               2
             ),

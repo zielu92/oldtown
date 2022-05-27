@@ -40,6 +40,7 @@ Vue.component('main-map', function (resolve) { require(['./components/MainMap'],
 Vue.component('photo-restore', function (resolve) { require(['./components/photo/PhotoRestoration'], resolve).default });
 Vue.component('edit-mode', function (resolve) { require(['./components/EditMode'], resolve).default });
 Vue.component('add-marker', function (resolve) { require(['./components/editViews/AddMarker'], resolve).default });
+Vue.component('add-layer', function (resolve) { require(['./components/editViews/AddLayer'], resolve).default });
 Vue.component('edit-mode-side', function (resolve) { require(['./components/editViews/EditModeSide'], resolve).default });
 Vue.component('edit-mode-top', function (resolve) { require(['./components/editViews/EditModeTop'], resolve).default });
 Vue.component('browse-mode', function (resolve) { require(['./components/BrowseMode'], resolve).default });

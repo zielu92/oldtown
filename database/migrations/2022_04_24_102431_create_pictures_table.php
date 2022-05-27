@@ -15,6 +15,10 @@ class CreatePicturesTable extends Migration
     {
         Schema::create('pictures', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
+            $table->string('path')->default('');
+            $table->string('originalName')->default('');
+            $table->integer('map_objects_id')->nullable();
             $table->timestamps();
         });
     }

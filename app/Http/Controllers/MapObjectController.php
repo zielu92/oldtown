@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMapObjectRequest;
 use App\Http\Requests\UpdateMapObjectRequest;
 use App\Models\Coordinate;
 use App\Models\MapObject;
+use App\Models\Pictures;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,8 +43,19 @@ class MapObjectController extends Controller
         $data = $request->all();
         $data['user_id']=Auth::user()->id;
         $objId = MapObject::create($data)->id;
-        $coordinates = explode(',', $data['latLng']);
-        Coordinate::create(['long'=>$coordinates[0], 'lat'=>$coordinates[1], 'map_objects_id'=>$objId]);
+        if($data['type']==1) {
+            $coordinates = explode(',', $data['latLng']);
+            Coordinate::create(['long'=>$coordinates[0], 'lat'=>$coordinates[1], 'map_objects_id'=>$objId]);
+        }
+        if($data['type']==2) {
+            $picture = new Pictures();
+            $picture->photoUpload($request->file, 'layer', $objId);
+            $coordinates = explode(',', $data['latLng']);
+            Coordinate::create(['long'=>$coordinates[0], 'lat'=>$coordinates[1], 'map_objects_id'=>$objId]);
+            Coordinate::create(['long'=>$coordinates[2], 'lat'=>$coordinates[3], 'map_objects_id'=>$objId]);
+
+        }
+
         return response()->json([
              'success' => true,
              'message' => 'Object has been added'

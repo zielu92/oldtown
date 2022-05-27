@@ -17,6 +17,8 @@ class Categories extends Model
         switch($this->type) {
             case(1):
                 return Lang::get('categories.marker');
+            case(2):
+                return Lang::get('categories.layers');
             default:
                 return Lang::get('categories.unknown');
         }

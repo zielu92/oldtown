@@ -25,7 +25,7 @@
 
                 <div class="form-group col-md-6">
                     {!! Form::label('type', __("categories.type")) !!}
-                    {!! Form::select('type',  [1 => __("categories.marker")],
+                    {!! Form::select('type',  [1 => __("categories.marker"),2 => __("categories.layers")],
                     null, ['class'=>'form-control']) !!}
                 </div>
                 {{-- TODO:Create style creator--}}
