@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Pictures extends Model
 {
     use HasFactory;
-    protected $upload = '/images/';
+    protected $upload = '/pictures/';
     protected $fillable = ['user_id', 'path', 'originalName', 'map_objects_id'];
 
     public function getPathAttribute($photo) {
