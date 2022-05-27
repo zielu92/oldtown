@@ -70,7 +70,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['obj_id'],
@@ -110,7 +109,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var objResponse, coordinate, coordinateObject, objsResponse;
+        var objResponse, mapObject, coordinate, coordinateObject, objsResponse;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -120,7 +119,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 objResponse = ''; //show single element on the map
 
                 if (!_this.obj_id) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
@@ -129,16 +128,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 objResponse = _context.sent;
-                coordinate = objResponse.data.coordinate[0];
+                mapObject = objResponse.data;
+                coordinate = mapObject.coordinate[0];
                 coordinateObject = [coordinate["long"], coordinate.lat];
                 _this.center = _this.convertCoordinatesAsObject(coordinate);
-                _this.marker = _this.convertCoordinatesAsObject(coordinate);
+                _this.marker = {
+                  mapObject: mapObject,
+                  'latLng': _this.convertCoordinatesAsObject(coordinate)
+                };
 
-              case 9:
-                _context.next = 11;
+              case 10:
+                _context.next = 12;
                 return axios.get("/getmapobjects");
 
-              case 11:
+              case 12:
                 objsResponse = _context.sent;
                 //add every published element
                 objsResponse.data.forEach(function (mapObj) {
@@ -152,7 +155,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -163,7 +166,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     addObjectsToMap: function addObjectsToMap(mapObj) {
       if (mapObj.type === 1) {
         var coordinateObject = [mapObj.coordinate[0]["long"], mapObj.coordinate[0].lat];
-        this.markers.push(coordinateObject);
+        this.markers.push({
+          mapObj: mapObj,
+          'latLng': coordinateObject
+        });
       }
     },
     convertCoordinatesAsObject: function convertCoordinatesAsObject(coordinate) {
@@ -191,7 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.vue2leaflet-map[data-v-56c7be70] {\n    height: 90vh;\n    width: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.vue2leaflet-map[data-v-56c7be70] {\n    height: 90vh;\n    width: 100%;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1174,16 +1180,20 @@ var render = function () {
               _vm._l(_vm.markers, function (marker, index) {
                 return _c(
                   "l-marker",
-                  { key: "A" + index, attrs: { "lat-lng": marker } },
+                  { key: "A" + index, attrs: { "lat-lng": marker.latLng } },
                   [
                     _c("l-popup", [
                       _c("div", [
                         _vm._v(
-                          "\n                                I am a popup\n                                "
+                          "\n                                " +
+                            _vm._s(marker.mapObj.name) +
+                            "\n                                "
                         ),
                         _c("p", [
                           _vm._v(
-                            "\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque\n                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.\n                                    Donec finibus semper metus id malesuada.\n                                "
+                            "\n                                    " +
+                              _vm._s(marker.mapObj.description) +
+                              "\n                                    "
                           ),
                         ]),
                       ]),
@@ -1196,7 +1206,7 @@ var render = function () {
               _vm.marker
                 ? _c(
                     "l-marker",
-                    { attrs: { "lat-lng": _vm.marker } },
+                    { attrs: { "lat-lng": _vm.marker.latLng } },
                     [
                       _c(
                         "l-tooltip",
@@ -1208,11 +1218,15 @@ var render = function () {
                         [
                           _c("div", [
                             _vm._v(
-                              "\n                                I am a tooltip\n                                "
+                              "\n                                " +
+                                _vm._s(_vm.marker.mapObject.name) +
+                                "\n                                "
                             ),
                             _c("p", [
                               _vm._v(
-                                "\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque\n                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.\n                                    Donec finibus semper metus id malesuada.\n                                "
+                                "\n                                    " +
+                                  _vm._s(_vm.marker.mapObject.description) +
+                                  "\n                                    "
                               ),
                             ]),
                           ]),
@@ -1235,6 +1249,7 @@ var render = function () {
             ],
             2
           ),
+          _vm._v("\n                " + _vm._s(_vm.marker) + "\n            "),
         ],
         1
       ),

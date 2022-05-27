@@ -7,26 +7,24 @@
                 <l-map :zoom="zoom" :center="center">
                     <l-tile-layer :url="url" :attribution="attribution" ></l-tile-layer>
                     <v-geosearch :options="geosearchOptions" ></v-geosearch>
-                    <l-marker v-for="marker, index in markers" :key="'A'+ index" :lat-lng="marker">
+                    <l-marker v-for="marker, index in markers" :key="'A'+ index" :lat-lng="marker.latLng">
                         <l-popup>
                             <div>
-                                I am a popup
+                                {{marker.mapObj.name}}
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                                    Donec finibus semper metus id malesuada.
+                                    {{marker.mapObj.description}}
+                                    <!--TODO: MORE Photo-->
                                 </p>
                             </div>
                         </l-popup>
                     </l-marker>
-                    <l-marker :lat-lng="marker" v-if="marker">
+                    <l-marker :lat-lng="marker.latLng" v-if="marker">
                         <l-tooltip :options="{ permanent: true, interactive: true }">
                             <div>
-                                I am a tooltip
+                                {{marker.mapObject.name}}
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                                    Donec finibus semper metus id malesuada.
+                                    {{marker.mapObject.description}}
+                                    <!--TODO: MORE Photo-->
                                 </p>
                             </div>
                         </l-tooltip>
@@ -34,6 +32,7 @@
                     <l-polyline v-for="polyline, index in polylines" :key="index" :lat-lngs="polyline.latlngs" :color="polyline.color"></l-polyline>
 <!--                    <l-image-overlay v-for="image in imageLayers" :key="image.url" :url="image.url" :bounds="image.bounds" :opacity="layerOpacity"></l-image-overlay>-->
                 </l-map>
+                {{marker}}
             </div>
         </div>
     </div>
@@ -81,10 +80,14 @@ export default {
             //show single element on the map
             if (this.obj_id) {
                 objResponse = await axios.get(`/getmapobject/${this.obj_id}`);
-                let coordinate = objResponse.data.coordinate[0];
+                let mapObject = objResponse.data;
+                let coordinate = mapObject.coordinate[0];
                 let coordinateObject = [coordinate.long, coordinate.lat];
                 this.center = this.convertCoordinatesAsObject(coordinate);
-                this.marker = this.convertCoordinatesAsObject(coordinate);
+                this.marker = {
+                        mapObject,
+                        'latLng': this.convertCoordinatesAsObject(coordinate)
+                    };
             }
             let objsResponse = await axios.get(`/getmapobjects`);
             //add every published element
@@ -102,7 +105,10 @@ export default {
         addObjectsToMap(mapObj) {
             if(mapObj.type===1) {
                 let coordinateObject = [mapObj.coordinate[0].long, mapObj.coordinate[0].lat];
-                this.markers.push(coordinateObject)
+                this.markers.push({
+                        mapObj,
+                        'latLng': coordinateObject
+                    })
             }
         },
         convertCoordinatesAsObject(coordinate) {
@@ -116,4 +122,5 @@ export default {
     height: 90vh;
     width: 100%;
 }
+
 </style>

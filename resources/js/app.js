@@ -7,17 +7,19 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-import { LMap, LTileLayer, LMarker, LPopup, LIcon, LImageOverlay, LPolyline } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup, LIcon, LImageOverlay, LPolyline, LTooltip } from 'vue2-leaflet'
 
 import VGeosearch from 'vue2-leaflet-geosearch';
 import 'leaflet/dist/leaflet.css';
 
-
+import L from 'leaflet';
+L.Icon.Default.imagePath = '/';
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 Vue.component('l-popup', LPopup);
+Vue.component('l-tooltip', LTooltip);
 Vue.component('l-icon',LIcon);
 Vue.component('l-image-overlay',LImageOverlay);
 Vue.component('l-polyline', LPolyline);
